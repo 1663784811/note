@@ -7,12 +7,12 @@ spring:
   jpa: #数据库配置
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/spider?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.0.103:3306/spider?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root
     password: because
     driver-class-name: com.mysql.cj.jdbc.Driver

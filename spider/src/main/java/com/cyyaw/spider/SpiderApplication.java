@@ -62,12 +62,10 @@ public class SpiderApplication implements ApplicationRunner {
             new Thread(() -> {
                 while (true) {
                     try {
-                        Thread.sleep(1000L);
+                        Thread.sleep(100L);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("=======  爬取数据 ");
-
                     List<String> pageUrl = WebPageData.pageUrl;
                     if (pageUrl.size() > 0) {
                         String url = pageUrl.remove(0);
@@ -80,7 +78,7 @@ public class SpiderApplication implements ApplicationRunner {
                                 map.put("url", url);
                                 map.put("data", httpData);
                                 WebPageData.pageList.add(map);
-                                System.out.println(httpData);
+                                System.out.println("================  爬取成功");
                             }
                         }
                     }
@@ -96,11 +94,10 @@ public class SpiderApplication implements ApplicationRunner {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("=======  处理数据 ");
-
                     // 获取数据
                     List<Map<String, Object>> pageList = WebPageData.pageList;
                     if (pageList.size() > 0) {
+                        System.out.println("=======  处理数据 ");
                         Map<String, Object> page = WebPageData.pageList.remove(0);
                         String data = page.get("data").toString();
                         Object type = page.get("type");
@@ -137,7 +134,9 @@ public class SpiderApplication implements ApplicationRunner {
                             String alt = attributes.getString("alt");
                             paImg.setAlt(alt);
                             String src = attributes.getString("src");
-                            paImg.setUrl(src);
+                            if(null !=src && src.indexOf("data:")!=0){
+                                paImg.setUrl(src);
+                            }
                             paImgDao.save(paImg);
                         }
 

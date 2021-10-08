@@ -37,7 +37,7 @@ public class PaATag implements Serializable {
     private String pageId;
 
     @Basic
-    @Column(name = "txt", columnDefinition = "text COMMENT 'url地址'")
+    @Column(name = "txt", columnDefinition = "text COMMENT '文字说明'")
     private String txt;
 
     @Basic
