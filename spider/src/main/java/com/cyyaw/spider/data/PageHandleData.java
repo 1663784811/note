@@ -1,9 +1,14 @@
 package com.cyyaw.spider.data;
 
+import java.util.List;
+
 public interface PageHandleData {
 
 
     String getPageTitle();
 
-    void getTags(String tag);
+    String getDescription();
+
+    List<TagElement> getTags(String tag);
+
 }

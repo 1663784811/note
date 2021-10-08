@@ -21,6 +21,7 @@ public class StandardSpider implements RunSpider{
                 Document document = Jsoup.connect(url).get();
                 return document.html();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;
