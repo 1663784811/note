@@ -60,9 +60,16 @@ public class SpiderApplication implements ApplicationRunner {
 
             // 线程池 ( 爬取数据 )
             new Thread(() -> {
+                boolean iswait = true;
                 while (true) {
                     try {
-                        Thread.sleep(100L);
+                        if(iswait){
+                            if(WebPageData.pageList.size()>100){
+                                Thread.sleep(1000L *10);
+                            }else{
+                                Thread.sleep(100L);
+                            }
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -79,7 +86,12 @@ public class SpiderApplication implements ApplicationRunner {
                                 map.put("data", httpData);
                                 WebPageData.pageList.add(map);
                                 System.out.println("================  爬取成功");
+                                iswait = true;
+                            }else{
+                                iswait = false;
                             }
+                        }else{
+                            iswait = false;
                         }
                     }
                 }
@@ -90,77 +102,80 @@ public class SpiderApplication implements ApplicationRunner {
             new Thread(() -> {
                 while (true) {
                     try {
-                        Thread.sleep(1000L);
+                        Thread.sleep(10L);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    // 获取数据
-                    List<Map<String, Object>> pageList = WebPageData.pageList;
-                    if (pageList.size() > 0) {
-                        System.out.println("=======  处理数据 ");
-                        Map<String, Object> page = WebPageData.pageList.remove(0);
-                        String data = page.get("data").toString();
-                        Object type = page.get("type");
-                        Object url = page.get("url");
-                        PageHandleData pageHandleData = new PageHandleDataStandard(data);
+                    try {
+                        // 获取数据
+                        List<Map<String, Object>> pageList = WebPageData.pageList;
+                        if (pageList.size() > 0) {
+                            System.out.println("=======  处理数据 ");
+                            Map<String, Object> page = WebPageData.pageList.remove(0);
+                            String data = page.get("data").toString();
+                            Object type = page.get("type");
+                            Object url = page.get("url");
+                            PageHandleData pageHandleData = new PageHandleDataStandard(data);
 
-                        // 获取页面title
-                        String pageTitle = pageHandleData.getPageTitle();
-                        String description = pageHandleData.getDescription();
+                            // 获取页面title
+                            String pageTitle = pageHandleData.getPageTitle();
+                            String description = pageHandleData.getDescription();
 
-                        PaPage paPage = new PaPage();
-                        paPage.setId(StringUtilWHY.getUUID());
-                        paPage.setNote("");
-                        paPage.setCreateTime(new Date());
-                        if (null != type) {
-                            paPage.setType(type.toString());
-                        }
-                        paPage.setTitle(pageTitle);
-                        paPage.setDescription(description);
-                        paPage.setUrl(url.toString());
-                        paPage.setContent(data);
-                        paPageDao.save(paPage);
-
-                        // 获取页面所有图片数据
-                        List<TagElement> imgList = pageHandleData.getTags("img");
-                        for (TagElement img : imgList) {
-                            PaImg paImg = new PaImg();
-                            paImg.setId(StringUtilWHY.getUUID());
-                            paImg.setNote("");
-                            paImg.setCreateTime(new Date());
-                            paImg.setPageId(paPage.getId());
-                            paImg.setType(null);
-                            JSONObject attributes = img.getAttributes();
-                            String alt = attributes.getString("alt");
-                            paImg.setAlt(alt);
-                            String src = attributes.getString("src");
-                            if(null !=src && src.indexOf("data:")!=0){
-                                paImg.setUrl(src);
+                            PaPage paPage = new PaPage();
+                            paPage.setId(StringUtilWHY.getUUID());
+                            paPage.setNote("");
+                            paPage.setCreateTime(new Date());
+                            if (null != type) {
+                                paPage.setType(type.toString());
                             }
-                            paImgDao.save(paImg);
-                        }
+                            paPage.setTitle(pageTitle);
+                            paPage.setDescription(description);
+                            paPage.setUrl(url.toString());
+                            paPage.setContent(data);
+                            paPageDao.save(paPage);
 
-                        // 获取页面所有 A 标签数据
-                        List<TagElement> aList = pageHandleData.getTags("a");
-                        for (TagElement aTag: aList) {
-
-                            PaATag paATag = new PaATag();
-                            paATag.setId(StringUtilWHY.getUUID());
-                            paATag.setNote("");
-                            paATag.setCreateTime(new Date());
-                            paATag.setPageId(paPage.getId());
-                            paATag.setTxt(aTag.getText());
-                            JSONObject attributes = aTag.getAttributes();
-                            String href = attributes.getString("href");
-                            if(!ObjectUtils.isEmpty(href)){
-                                paATag.setHref(attributes.getString("href"));
-                                WebPageData.pageUrl.add(href);
+                            // 获取页面所有图片数据
+                            List<TagElement> imgList = pageHandleData.getTags("img");
+                            for (TagElement img : imgList) {
+                                PaImg paImg = new PaImg();
+                                paImg.setId(StringUtilWHY.getUUID());
+                                paImg.setNote("");
+                                paImg.setCreateTime(new Date());
+                                paImg.setPageId(paPage.getId());
+                                paImg.setType(null);
+                                JSONObject attributes = img.getAttributes();
+                                String alt = attributes.getString("alt");
+                                paImg.setAlt(alt);
+                                String src = attributes.getString("src");
+                                if(null !=src && src.indexOf("data:")!=0){
+                                    paImg.setUrl(src);
+                                }
+                                paImgDao.save(paImg);
                             }
-                            paATagDao.save(paATag);
 
+                            // 获取页面所有 A 标签数据
+                            List<TagElement> aList = pageHandleData.getTags("a");
+                            for (TagElement aTag: aList) {
+
+                                PaATag paATag = new PaATag();
+                                paATag.setId(StringUtilWHY.getUUID());
+                                paATag.setNote("");
+                                paATag.setCreateTime(new Date());
+                                paATag.setPageId(paPage.getId());
+                                paATag.setTxt(aTag.getText());
+                                JSONObject attributes = aTag.getAttributes();
+                                String href = attributes.getString("href");
+                                if(!ObjectUtils.isEmpty(href)){
+                                    paATag.setHref(attributes.getString("href"));
+                                    WebPageData.pageUrl.add(href);
+                                }
+                                paATagDao.save(paATag);
+
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
                 }
             }).start();
 

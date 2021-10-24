@@ -28,7 +28,7 @@ public class StringUtilWHY extends StringUtils {
     /**
      * 生成随机数
      */
-    public static String getRandomString(int length,String str) {
+    public static String getRandomString(int length, String str) {
         StringBuffer sb = new StringBuffer();
         int len = str.length();
         for (int i = 0; i < length; i++) {
@@ -182,13 +182,43 @@ public class StringUtilWHY extends StringUtils {
         } else {
             for (int i = 0; i < arr.length; i++) {
                 if (i > 0 && arr.length > i) {
-                    sb.append(str+arr[i]);
+                    sb.append(str + arr[i]);
                 } else {
                     sb.append(arr[i]);
                 }
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 获取域名
+     *
+     * @return
+     */
+    public static String getDomainName(String name) {
+        String pattern = "((http://)|(https://))?([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}(/){0,}";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(name);
+        if (m.find()) {
+            String group = m.group();
+            int i = group.indexOf("?");
+            if (i > -1) {
+                group = group.substring(0, i);
+            }
+            i = group.indexOf("http://");
+            if (i > -1) {
+                group = group.substring(i + "http://".length());
+            }
+            i = group.indexOf("https://");
+            if (i > -1) {
+                group = group.substring(i + "https://".length());
+            }
+            group = group.replaceAll("/", "");
+            return group;
+        }
+
+        return null;
     }
 
 }

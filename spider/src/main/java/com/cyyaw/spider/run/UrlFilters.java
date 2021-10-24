@@ -5,7 +5,10 @@ public class UrlFilters {
     private String urlArr[] ={
             "baidu.com",
             "taobao.com",
-            "qq.com"
+            "qq.com",
+            "163.com",
+            "gov.cn",
+            "pedaily.cn"
     };
 
 

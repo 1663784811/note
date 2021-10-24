@@ -44,5 +44,8 @@ public class PaATag implements Serializable {
     @Column(name = "href",  columnDefinition = "text COMMENT 'href'")
     private String href;
 
+    @Basic
+    @Column(name = "dn",  columnDefinition = "varchar(255) COMMENT '域名'")
+    private String dn;
 
 }
