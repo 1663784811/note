@@ -5,11 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cyyaw</groupId>
-    <artifactId>7桥接模式</artifactId>
+    <artifactId>_26数据结构和算法_ 排序</artifactId>
     <version>1.0-SNAPSHOT</version>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+
+
 
 </project>

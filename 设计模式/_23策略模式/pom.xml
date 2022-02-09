@@ -7,6 +7,13 @@
     <groupId>com.cyyaw</groupId>
     <artifactId>23策略模式</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+
     <build>
         <plugins>
             <plugin>
