@@ -21,7 +21,6 @@ public class InterpreterPatternDemo {
         Expression isMarriedWoman = getMarriedWomanExpression();
 
         System.out.println("John is male? " + isMale.interpret("John"));
-        System.out.println("Julie is a married women? "
-                + isMarriedWoman.interpret("Married Julie"));
+        System.out.println("Julie is a married women? " + isMarriedWoman.interpret("Married Julie"));
     }
 }
