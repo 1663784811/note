@@ -26,7 +26,7 @@ services:
 # 第一步: 把整个目录复制到linux 某个目录下，
 # 第二步：docker-compose up -d 启动    docker-compose logs -f 等待报错
 # 第三步：docker-compose down  停止
-# 第四步：修改权限 chmod -R 777 ./data/sql-data
+# 第四步：修改权限 chmod -R 700 ./data/sql-data
 # 第五步：docker-compose up -d 启动
 
 
