@@ -16,10 +16,18 @@ services:
       - '8443:443'
       - '2222:22'
     volumes:
-      - ./data/config:/etc/gitlab
-      - ./data/data:/var/opt/gitlab
-      - ./data/logs:/var/log/gitlab
+      - ./data/git-data/:/var/opt/gitlab/git-data
+      - ./data/sql-data:/var/opt/gitlab/postgresql/data
 
+
+
+
+# ====================            数据迁移
+# 第一步: 把整个目录复制到linux 某个目录下，
+# 第二步：docker-compose up -d 启动    docker-compose logs -f 等待报错
+# 第三步：docker-compose down  停止
+# 第四步：修改权限 chmod -R 777 ./data/sql-data
+# 第五步：docker-compose up -d 启动
 
 
 
