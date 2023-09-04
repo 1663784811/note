@@ -11,6 +11,33 @@
 ### 拷贝
 
 ## 多线程
+```text
+多线程控制：
+    创建线程
+        1.
+        2.
+        3.
+    停止线程:
+        
+    线程休眠:
+        
+    线程等待:
+        
+    线程通信:
+        CompletableFuture
+    
+AQS:
+    
+
+0.无锁
+1.独占锁：
+    ReentrantLock
+2.读写锁：
+    ReentrantReadWriteLock
+3.邮戳锁,版本锁 StampedLock
+
+```
+
 
 ## 分布式事务
 
