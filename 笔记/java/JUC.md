@@ -31,4 +31,26 @@
                     runAsync(Runable  runable, Excutor ex);
                     supplyAsync(Supplier<U> su);
                     supplyAsync(Supplier<U> su, Excutor ex);
+    线程中断 LockSuport
+
+
     
+
+### 二、 锁
+
+    锁的8种现象: 理解无锁、对象锁、类锁
+    synchronized 原理    monitor(管程)
+        同步代码块   
+            monitorenter  加锁
+            monitorexit   解锁
+        同步方法
+            ACC_SYNCHRONIZED
+        静态同步方法
+            ACC_STATIC     ACC_SYNCHRONIZED
+
+    死锁排查
+        jps -l  查进程
+        jstack <进程号>
+            Found 1 deadlock
+        
+        
