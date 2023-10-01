@@ -37,6 +37,11 @@
     
 
 ### 二、 锁
+    AQS 抽象队列同步器
+        是用来实现锁或者其它同步器组件的公共基础部分的抽象实现，主要是解决锁分配给哪个线程的问题
+        是重量级基础框架及整个juc体系的基石
+        整体就是一个抽象的FIFO队列来完成资源获取线程的排队工作，并通过一个int类变量表示持有锁的状态
+        
 
     锁的8种现象: 理解无锁、对象锁、类锁
     synchronized 原理    monitor(管程)
@@ -47,10 +52,22 @@
             ACC_SYNCHRONIZED
         静态同步方法
             ACC_STATIC     ACC_SYNCHRONIZED
-
+        
     死锁排查
         jps -l  查进程
         jstack <进程号>
             Found 1 deadlock
         
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
